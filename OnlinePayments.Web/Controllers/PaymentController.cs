@@ -121,7 +121,7 @@ namespace OnlinePayments.Web.Controllers
             });
             if (result.Success)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Payment");
             }
             else
             {

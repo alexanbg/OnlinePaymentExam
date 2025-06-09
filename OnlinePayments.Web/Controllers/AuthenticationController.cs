@@ -30,7 +30,7 @@ namespace OnlinePayments.Web.Controllers
             if (result.Success)
             {
                 HttpContext.Session.SetInt32("UserId", result.UserId.Value);
-                HttpContext.Session.SetString("Username", result.Username);
+                HttpContext.Session.SetString("FullName", result.FullName);
 
                 if (!string.IsNullOrEmpty(model.ReturnUrl))
                     return Redirect(model.ReturnUrl);
@@ -40,6 +40,11 @@ namespace OnlinePayments.Web.Controllers
 
             ViewData["ErrorMessage"] = result.Error ?? "Invalid username or password";
             return View(model);
+        }
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login");
         }
     }
 }

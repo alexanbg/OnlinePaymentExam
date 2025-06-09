@@ -69,7 +69,7 @@ namespace OnlinePayments.Web.Controllers
             {
                 ViewData["ErrorMessage"] = result.Error ?? "Error sending payment";
             }
-            return RedirectToAction("Index", "Payment");
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Cancel(int paymentId)

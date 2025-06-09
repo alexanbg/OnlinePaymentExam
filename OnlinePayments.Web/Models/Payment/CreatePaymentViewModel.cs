@@ -9,6 +9,7 @@ public class CreatePaymentViewModel
 
     [Required]
     [StringLength(9, MinimumLength = 9, ErrorMessage = "The account number must be 9 characters long")]
+    [RegularExpression(@"^[A-Za-z0-9]+$", ErrorMessage = "Invalid Account Number")]
     public string ReceivingAccountNumber { get; set; }
     public List<SelectListItem> UserAccounts { get; set; }
 

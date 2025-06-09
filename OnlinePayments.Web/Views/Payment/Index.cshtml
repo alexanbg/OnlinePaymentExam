@@ -1,0 +1,79 @@
+﻿@model PaymentViewModelList
+@{
+    ViewData["Title"] = "Payments";
+}
+
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-8">
+            
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">Вашите плащания</h5>
+                </div>
+                <button class="btn btn-sm btn-outline-primary"
+                        onclick="location.href='@Url.Action("CreatePayment", "Payment")'">
+                    СЪЗДАЙ НОВО ПЛАЩАНЕ
+                </button>
+                <button class="btn btn-sm btn-outline-primary"
+                onclick="location.href='@Url.Action("Index", "Payment", new {sortByStatus = false})'">
+                    Сортирай по дата
+                </button>
+                <button class="btn btn-sm btn-outline-primary"
+                onclick="location.href='@Url.Action("Index", "Payment", new {sortByStatus = true})'">
+                    Сортирай по статус
+                </button>
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(ViewData["ErrorMessage"] as string))
+                    {
+                        <div class="alert alert-danger">
+                            @ViewData["ErrorMessage"]
+                        </div>
+                    }
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Подател</th>
+                                    <th>Получател</th>
+                                    <th>Сума</th>
+                                    <th>Основание</th>
+                                    <th>Статус</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var payment in Model.Payments)
+                                {
+                                    <tr>
+                                        <td>@payment.SendingAccountNumber</td>
+                                        <td>@payment.ReceivingAccountNumber</td>
+                                        <td>@payment.Sum лв.</td>
+                                        <td>@payment.Description</td>
+                                        <td>@payment.CreationDate</td>
+                                        <td>@payment.StatusName</td>
+                                        @if (payment.Status == 1)
+                                        {
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary"
+                                                        onclick="location.href='@Url.Action("Send", "Payment", new { paymentId = payment.PaymentId })'">
+                                                    Send
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-primary"
+                                                        onclick="location.href='@Url.Action("Cancel", "Payment", new { paymentId = payment.PaymentId })'">
+                                                    Cancel
+                                                </button>
+                                            </td>
+                                        }
+                                        
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
